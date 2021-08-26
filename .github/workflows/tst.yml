@@ -1,0 +1,19 @@
+name: tst
+
+on: workflow_dispatch
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    timeout-minutes: 999
+
+    steps:
+    - name: Prueba
+      run: |
+        $i = 360
+        do {
+         Write-Host $i
+         Sleep 60
+         $i--
+        } while ($i -gt 0)
