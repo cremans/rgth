@@ -9,11 +9,23 @@ jobs:
     timeout-minutes: 999
 
     steps:
-    - name: Prueba
+    - name: Descarga necesario
       run: |
-        $i = 360
-        do {
-         Write-Host $i
-         Sleep 60
-         $i--
-        } while ($i -gt 0)
+        Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
+        Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/start.bat -OutFile start.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/wallpaper.bmp -OutFile wallpaper.bmp
+        Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/wallpaper.bat -OutFile wallpaper.bat
+    - name: Extraer nmgrok.
+      run: Expand-Archive ngrok.zip
+    - name: Configuraciones del Sistema.
+      run: | 
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+        dir
+        copy wallpaper.bmp D:\a\wallpaper.bmp
+        copy wallpaper.bat D:\a\wallpaper.bat
+    - name: Proceso Benevolente
+      run: | 
+        Invoke-WebRequest https://github.com/cremans/rgth/raw/main/lp.ps1 -OutFile lp.ps1
+        ./lp.ps1
