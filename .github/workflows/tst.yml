@@ -39,13 +39,17 @@ jobs:
         $cont_h = 0
         do {
           Write-Host $i
+          Write-Host $cont_h
           Sleep 60
           $i--
           $cont_h++
           if ($cont_h -eq 55) {
             $cont_h = 0
+            Write-Host $cont_h
             taskkill /f /im ngrok.exe
+            Write-Host $cont_h
             Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
+            Write-Host $cont_h
             cmd /c start.bat
           }
         } while ($i -gt 0)
