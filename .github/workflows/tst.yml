@@ -31,7 +31,21 @@ jobs:
         copy wallpaper.bat D:\a\wallpaper.bat
     - name: Conectar con tunerl.
       run: Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
+    - name: Generando datos de conexion.
+      run: cmd /c start.bat
     - name: Proceso Benevolente
       run: | 
-        Invoke-WebRequest https://github.com/cremans/rgth/raw/main/lp.ps1 -OutFile lp.ps1
-        ./lp.ps1
+        $i = 360
+        $cont_h = 0
+        do {
+          Write-Host $i
+          Sleep 60
+          $i--
+          $cont_h++
+          if ($cont_h -eq 55) {
+            $cont_h = 0
+            taskkill /f /im ngrok.exe
+            Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
+            cmd /c start.bat
+          }
+        } while ($i -gt 0)
