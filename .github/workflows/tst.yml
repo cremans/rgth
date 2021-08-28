@@ -43,7 +43,7 @@ jobs:
           Sleep 60
           $i--
           $cont_h++
-          if ($cont_h -eq 10) {
+          if ($cont_h -eq 5) {
             $cont_h = 0
             Write-Host $cont_h
             taskkill /f /im ngrok.exe
