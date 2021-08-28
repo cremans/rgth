@@ -58,7 +58,7 @@ jobs:
             Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
             Write-Host $cont_h
             echo IP:
-            Invoke-WebRequest localhost:4040/api/tunnels
+            Invoke-WebRequest http://localhost:4040/api/tunnels
             echo Username: administrator
             echo Password: 0xD4DFUT99
           }
