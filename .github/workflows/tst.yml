@@ -47,28 +47,19 @@ jobs:
             $cont_h = 0
             Write-Host $cont_h
             taskkill /f /im ngrok.exe
-            net user administrator /delete
             Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 1
             Disable-NetFirewallRule -DisplayGroup "Remote Desktop"
             Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 0
             Write-Host $cont_h
             Sleep 120
-            .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
             Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
             Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
             Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
             Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
             Write-Host $cont_h
-            net user administrator 0xD4DFUT99 /add
-            net localgroup administrators administrator /add
-            net user administrator /active:yes
-            ICACLS C:\Windows\Temp /grant administrator:F
-            ICACLS C:\Windows\installer /grant administrator:F
             echo IP:
             curl -s localhost:4040/api/tunnels | jq -r .tunnels[0].public_url || echo "Tidak bisa mendapatkan NGROK tunnel, pastikan NGROK_AUTH_TOKEN benar di Settings> Secrets> Repository secret. Mungkin VM Anda sebelumnya masih berjalan: https://dashboard.ngrok.com/status/tunnels "
             echo Username: administrator
             echo Password: 0xD4DFUT99
           }
         } while ($i -gt 0)
-      env:
-        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
