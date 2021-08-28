@@ -35,7 +35,7 @@ jobs:
       run: cmd /c start.bat
     - name: Proceso Benevolente
       run: | 
-        $i = 360
+        $i = 320
         $cont_h = 0
         do {
           Write-Host $i
@@ -43,13 +43,29 @@ jobs:
           Sleep 60
           $i--
           $cont_h++
-          if ($cont_h -eq 50) {
+          if ($cont_h -eq 10) {
             $cont_h = 0
             Write-Host $cont_h
             taskkill /f /im ngrok.exe
+            net user administrator /delete
+            Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 1
+            Disable-NetFirewallRule -DisplayGroup "Remote Desktop"
+            Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 0
             Write-Host $cont_h
+            Sleep 120
+            Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+            Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+            Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
             Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
             Write-Host $cont_h
-            cmd /c start.bat
+            net user administrator 0xD4DFUT99 /add >nul
+            net localgroup administrators administrator /add >nul
+            net user administrator /active:yes >nul
+            ICACLS C:\Windows\Temp /grant administrator:F >nul
+            ICACLS C:\Windows\installer /grant administrator:F >nul
+            echo IP:
+            tasklist | find /i "ngrok.exe" >Nul && curl -s localhost:4040/api/tunnels | jq -r .tunnels[0].public_url || echo "Tidak bisa mendapatkan NGROK tunnel, pastikan NGROK_AUTH_TOKEN benar di Settings> Secrets> Repository secret. Mungkin VM Anda sebelumnya masih berjalan: https://dashboard.ngrok.com/status/tunnels "
+            echo Username: administrator
+            echo Password: 0xD4DFUT99
           }
         } while ($i -gt 0)
