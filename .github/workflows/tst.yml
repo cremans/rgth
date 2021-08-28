@@ -55,7 +55,7 @@ jobs:
             Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
             Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
             Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
-            Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
+            .\ngrok\ngrok.exe tcp 3389
             Write-Host $cont_h
             tasklist
             echo IP:
