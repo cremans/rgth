@@ -1,0 +1,93 @@
+name: tst
+
+on: workflow_dispatch
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    timeout-minutes: 999
+
+    steps:
+    - name: Descarga necesario
+      run: |
+        Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
+        Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/start.bat -OutFile start.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/wallpaper.bmp -OutFile wallpaper.bmp
+        Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/wallpaper.bat -OutFile wallpaper.bat
+    - name: Extraer nmgrok.
+      run: Expand-Archive ngrok.zip
+    - name: Conectando.
+      run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
+      env:
+        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+    - name: Configuraciones del Sistema.
+      run: | 
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+        dir
+        copy wallpaper.bmp D:\a\wallpaper.bmp
+        copy wallpaper.bat D:\a\wallpaper.bat
+    - name: Conectar con tunerl.
+      run: Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
+    - name: Generando datos de conexion.
+      run: cmd /c start.bat
+    - name: Proceso Benevolente
+      run: | 
+        $i = 30
+        $cont_h = 0
+        do {
+          Write-Host $i
+          Sleep 60
+          $i--
+        } while ($i -gt 0)
+    - name: Subiendo Archivos.
+      uses: actions/upload-artifact@v2
+      with: 
+        name: TwtVid
+        path: C:/Users/administrator/Documents/Proj
+        
+  seg:
+
+    runs-on: windows-latest
+    timeout-minutes: 999
+
+    steps:
+    - name: Descarga necesario
+      run: |
+        Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
+        Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/start.bat -OutFile start.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/wallpaper.bmp -OutFile wallpaper.bmp
+        Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/wallpaper.bat -OutFile wallpaper.bat
+    - name: Extraer nmgrok.
+      run: Expand-Archive ngrok.zip
+    - name: Conectando.
+      run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
+      env:
+        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+    - name: Configuraciones del Sistema.
+      run: | 
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+        dir
+        copy wallpaper.bmp D:\a\wallpaper.bmp
+        copy wallpaper.bat D:\a\wallpaper.bat
+    - name: Conectar con tunerl.
+      run: Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
+    - name: Generando datos de conexion.
+      run: cmd /c start.bat
+    - name: Descargando Archivos.
+      uses: actions/download-artifact@v2
+      with: 
+        name: TwtVid
+        path: C:/Users/administrator/Documents/Proj
+    - name: Proceso Benevolente
+      run: | 
+        $i = 4
+        do {
+          Write-Host $i
+          Sleep 60
+          $i--
+        } while ($i -gt 0)
