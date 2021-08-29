@@ -49,7 +49,7 @@ jobs:
         path: C:/Users/administrator/Documents/Proj
         
   seg:
-
+    needs: build
     runs-on: windows-latest
     timeout-minutes: 999
 
