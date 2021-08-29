@@ -49,6 +49,7 @@ jobs:
             taskkill /f /im ngrok.exe
             Write-Host $cont_h
             Sleep 120
+            cd ngrok
             cmd /c ngrok.exe tcp 3389
             Write-Host $cont_h
             tasklist
