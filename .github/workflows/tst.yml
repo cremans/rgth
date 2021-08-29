@@ -56,7 +56,7 @@ jobs:
             Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
             Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
             cd ngrok
-            ngrok tcp 3389
+            cmd /c ngrok.exe tcp 3389
             Write-Host $cont_h
             tasklist
             echo IP:
