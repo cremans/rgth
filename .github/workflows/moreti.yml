@@ -45,3 +45,15 @@ jobs:
       run: TASKKILL /f /im ngrok.exe
     - name: Ejecutar Proceso NGRK.
       run: TASKKILL /f /im ngrok.exe
+    - name: Conectando.
+      run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH
+      env:
+        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH }}
+    - name: Proceso Benevolente
+      run: | 
+        $i = 60
+        do {
+          Write-Host $i
+          Sleep 60
+          $i--
+        } while ($i -gt 0)
