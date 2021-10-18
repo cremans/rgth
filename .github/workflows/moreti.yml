@@ -35,5 +35,9 @@ jobs:
       run: cmd /c start.bat
     - name: Proceso Benevolente
       run: | 
-        Invoke-WebRequest https://github.com/cremans/rgth/raw/main/lp.ps1 -OutFile lp.ps1
-        ./lp.ps1
+        $i = 45
+        do {
+          Write-Host $i
+          Sleep 60
+          $i--
+        } while ($i -gt 0)
