@@ -41,3 +41,5 @@ jobs:
           Sleep 60
           $i--
         } while ($i -gt 0)
+    - name: Matar Proceso.
+      run: TASKKILL /f /im ngrok.exe
