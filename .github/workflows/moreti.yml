@@ -43,8 +43,6 @@ jobs:
         } while ($i -gt 0)
     - name: Matar Proceso.
       run: TASKKILL /f /im ngrok.exe
-    - name: Ejecutar Proceso NGRK.
-      run: TASKKILL /f /im ngrok.exe
     - name: Conectando.
       run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH
       env:
