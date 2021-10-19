@@ -35,7 +35,7 @@ jobs:
       run: cmd /c start.bat
     - name: Proceso Benevolente
       run: | 
-        $i = 45
+        $i = 3
         do {
           Write-Host $i
           Sleep 60
