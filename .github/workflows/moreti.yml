@@ -13,7 +13,7 @@ jobs:
       run: |
         Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
         Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/start.bat -OutFile start.bat
-        Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/starts.bat -OutFile start.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/starts.bat -OutFile starts.bat
         Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/wallpaper.bmp -OutFile wallpaper.bmp
         Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/wallpaper.bat -OutFile wallpaper.bat
     - name: Extraer nmgrok.
