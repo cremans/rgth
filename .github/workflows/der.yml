@@ -16,7 +16,8 @@ jobs:
     - name: Extraer derin.
       run: tar --extract --file dero_linux_amd64.tar.gz
     - name: Ejecutar
-      run: | 
+      run: |
+        ls
         cd dero_linux_amd64
         ls
         ./dero-miner-linux-amd64 --wallet-address dero1qykyta6ntpd27nl0yq4xtzaf4ls6p5e9pqu0k2x4x3pqq5xavjsdxqgny8270 --mining-threads 6 --daemon-rpc-address minernode1.dero.io:10100
